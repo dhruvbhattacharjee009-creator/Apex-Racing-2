@@ -1,0 +1,1363 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#090c11">
+<meta name="description" content="APEX — independent Formula One motorsport intelligence, race analysis and vehicle engineering research platform.">
+<title>APEX — Motorsport Intelligence & Engineering</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"}}</script>
+<style>
+:root{--bg:#090c11;--panel:#10161f;--panel2:#141c27;--line:#263241;--text:#edf2f7;--muted:#94a2b3;--red:#e52b3b;--green:#56c596;--amber:#e7b65b;--blue:#6ba9ff;--mono:"DM Mono",monospace;--sans:Inter,system-ui,sans-serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px;line-height:1.55}button,input,select{font:inherit}button{cursor:pointer}.topbar{position:sticky;top:0;z-index:20;background:#090c11ed;backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}.topinner{max-width:1440px;margin:auto;padding:13px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{display:flex;align-items:center;gap:11px;font-weight:900;letter-spacing:3px;font-size:20px}.brandmark{width:27px;height:27px;background:linear-gradient(135deg,var(--red) 0 48%,transparent 49%);border:2px solid #f04a56;transform:skew(-16deg)}.brand small{display:block;font:9px var(--mono);color:var(--muted);letter-spacing:1.5px}.nav{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}.nav button,.tab{background:transparent;border:1px solid transparent;color:var(--muted);padding:8px 10px;border-radius:7px;font-size:12px}.nav button.active,.nav button:hover,.tab.active{background:#1b2532;border-color:#344355;color:#fff}.wrap{max-width:1440px;margin:auto;padding:30px 24px 70px}.page{display:none}.page.active{display:block}.eyebrow{font:10px var(--mono);letter-spacing:2px;color:var(--red);text-transform:uppercase}.hero{display:grid;grid-template-columns:1.3fr .7fr;gap:22px;align-items:stretch;margin-bottom:22px}.heroMain{padding:38px 0}.hero h1{font-size:clamp(42px,7vw,86px);line-height:.94;letter-spacing:-5px;margin:15px 0 20px;font-weight:900}.hero h1 span{color:var(--red)}.lead{font-size:16px;color:#b6c1ce;max-width:700px}.panel{background:linear-gradient(145deg,#121a24,#0f151d);border:1px solid var(--line);border-radius:12px;padding:19px;margin-bottom:14px;min-width:0}.panel h2,.panel h3{margin:0 0 10px}.panel p{color:var(--muted)}.sectionhead{display:flex;align-items:end;justify-content:space-between;gap:16px;margin:30px 0 13px}.sectionhead h2{font-size:25px;margin:4px 0}.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:13px}.c3{grid-column:span 3}.c4{grid-column:span 4}.c5{grid-column:span 5}.c6{grid-column:span 6}.c7{grid-column:span 7}.c8{grid-column:span 8}.c12{grid-column:span 12}.stat{font-size:28px;font-weight:800;letter-spacing:-1px}.statlabel{font:10px var(--mono);color:var(--muted);text-transform:uppercase;letter-spacing:1px}.muted{color:var(--muted)}.small{font-size:11px}.mono{font-family:var(--mono)}.btn{border:1px solid #59697b;background:#e9eef4;color:#0b1119;padding:10px 14px;border-radius:7px;font-weight:800;font-size:12px}.btn:hover{filter:brightness(.92)}.btn.secondary{background:#17212d;color:var(--text);border-color:#354557}.btn.red{background:var(--red);color:white;border-color:var(--red)}.btn:disabled{opacity:.4;cursor:not-allowed}.controls{display:flex;align-items:end;gap:10px;flex-wrap:wrap}.field{display:flex;flex-direction:column;gap:5px;min-width:140px}.field label{font:10px var(--mono);color:var(--muted);text-transform:uppercase}.field select,.field input{background:#0b1118;color:var(--text);border:1px solid #354354;border-radius:7px;padding:10px;min-width:0}.status{font:11px var(--mono);color:var(--muted);padding:9px 0}.status.good{color:var(--green)}.status.error{color:#ff7c85}.notice{border-left:3px solid var(--amber);padding:10px 13px;background:#211c13;color:#c8b58f;border-radius:0 7px 7px 0;font-size:12px;margin:12px 0}.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:8px}table{border-collapse:collapse;width:100%;font-size:12px;white-space:nowrap}th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line)}th{font:10px var(--mono);color:var(--muted);background:#141d28;text-transform:uppercase}tr:last-child td{border-bottom:0}.tag{font:10px var(--mono);border:1px solid #3a4b5d;border-radius:4px;padding:4px 6px;color:#c5d0dc}.trackCanvas{width:100%;height:490px;display:block;background:radial-gradient(ellipse at center,#17212b,#0b1017);border:1px solid var(--line);border-radius:9px}.split{display:grid;grid-template-columns:1fr 1fr;gap:14px}.chartbox{height:280px;position:relative}.carStage{height:540px;position:relative;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:radial-gradient(ellipse at 50% 42%,#1b2634,#080c12 70%)}#car3d{width:100%;height:100%;display:block}.stageLabel{position:absolute;left:16px;top:14px;font:10px var(--mono);color:#a8b6c6;letter-spacing:1px;pointer-events:none}.stageHint{position:absolute;right:16px;bottom:14px;color:#91a0b0;font:10px var(--mono);pointer-events:none}.specGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.spec{padding:11px;background:#0c1219;border:1px solid var(--line);border-radius:7px}.spec b{display:block;font-size:17px}.spec span{font:9px var(--mono);color:var(--muted)}.componentList{display:flex;gap:6px;flex-wrap:wrap}.componentList button{background:#141d28;border:1px solid #354557;color:#cbd5df;border-radius:6px;padding:8px 10px;font-size:11px}.componentList button.active{border-color:var(--red);color:white}.footer{border-top:1px solid var(--line);margin-top:40px;padding:22px 0;color:var(--muted);font-size:11px}.source{display:flex;justify-content:space-between;gap:15px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}a{color:#9ec5ff}.mobileMenu{display:none}
+@media(max-width:900px){.topinner{align-items:flex-start;flex-direction:column}.nav{justify-content:flex-start}.hero{grid-template-columns:1fr}.heroMain{padding:18px 0}.c3,.c4,.c5,.c6,.c7,.c8{grid-column:span 12}.wrap{padding:20px 13px 55px}.hero h1{letter-spacing:-2px}.trackCanvas{height:360px}.carStage{height:420px}}
+@media(max-width:560px){.nav{display:grid;grid-template-columns:repeat(3,1fr);width:100%}.nav button{padding:8px 3px;font-size:10px}.split{grid-template-columns:1fr}.controls>*{flex:1}.controls .btn{flex:0 0 auto}.specGrid{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="topinner">
+ <div class="brand"><div class="brandmark"></div><div>APEX<small>BEYOND THE RACING LINE</small></div></div>
+ <nav class="nav" id="nav">
+  <button class="active" data-page="overview">Overview</button><button data-page="calendar">Grand Prix</button><button data-page="replay">2D Replay</button><button data-page="cars">3D Engineering</button><button data-page="results">Race Results</button><button data-page="drivers">Drivers & Teams</button><button data-page="research">Research</button>
+ </nav>
+</div></header>
+<main class="wrap">
+<section class="page active" id="page-overview">
+ <div class="hero"><div class="heroMain"><div class="eyebrow">Independent motorsport intelligence / 2023—2026</div><h1>THE SCIENCE<br>BEHIND <span>SPEED.</span></h1><p class="lead">A data-led Formula One research environment for circuit analysis, historical race telemetry, vehicle architecture and technical development. Every dataset is attributed. Every model states its assumptions.</p><div class="controls"><button class="btn red" onclick="showPage('replay')">Open race replay ↗</button><button class="btn secondary" onclick="showPage('cars')">Explore vehicle lab</button></div></div>
+ <div class="panel"><div class="eyebrow">SYSTEM STATUS</div><h2>Data connections</h2><div class="source"><span>OpenF1 historical telemetry</span><b id="openStatus" class="muted">Not checked</b></div><div class="source"><span>Jolpica race database</span><b id="jolpicaStatus" class="muted">Not checked</b></div><div class="source"><span>F1DB open dataset</span><b class="muted">External release</b></div><p class="small">Historical telemetry coverage begins in 2023. Results and championship records cover earlier seasons through Jolpica/F1DB.</p><button class="btn secondary" onclick="checkConnections()">Check data connections</button><div id="connectionMsg" class="status"></div></div></div>
+ <div class="grid">
+  <div class="panel c3"><div class="statlabel">Research window</div><div class="stat">2023–26</div><p class="small">Telemetry-focused seasons</p></div>
+  <div class="panel c3"><div class="statlabel">Historical records</div><div class="stat">1950+</div><p class="small">Results database coverage</p></div>
+  <div class="panel c3"><div class="statlabel">Simulation basis</div><div class="stat">Measured</div><p class="small">Where session data exists</p></div>
+  <div class="panel c3"><div class="statlabel">Vehicle model</div><div class="stat">Parametric</div><p class="small">Educational reconstruction</p></div>
+ </div>
+ <div class="sectionhead"><div><div class="eyebrow">Platform modules</div><h2>One environment. Multiple disciplines.</h2></div></div>
+ <div class="grid">
+  <div class="panel c4"><span class="tag">01 / CIRCUITS</span><h3>Grand Prix database</h3><p>Browse event calendars, circuit metadata, track diagrams and session availability.</p><button class="btn secondary" onclick="showPage('calendar')">Explore calendar →</button></div>
+  <div class="panel c4"><span class="tag">02 / TELEMETRY</span><h3>Historical race replay</h3><p>Reconstruct car movement from OpenF1 location samples with timeline controls.</p><button class="btn secondary" onclick="showPage('replay')">Open replay →</button></div>
+  <div class="panel c4"><span class="tag">03 / VEHICLES</span><h3>Vehicle engineering</h3><p>Inspect a detailed parametric open-wheel model and study aerodynamic components.</p><button class="btn secondary" onclick="showPage('cars')">Enter 3D lab →</button></div>
+ </div>
+ <div class="notice">APEX is an independent educational research project. It is not affiliated with Formula One, the FIA or any racing team. Team names and marks belong to their respective owners.</div>
+</section>
+
+<section class="page" id="page-calendar">
+ <div class="eyebrow">01 / Event database</div>
+ <h2>Grand Prix calendar & circuit intelligence</h2>
+ <p class="muted">Select a season to load event records. Circuit geometry is sourced where available; unavailable geometry is clearly identified rather than fabricated.</p>
+ <div class="panel">
+  <div class="controls">
+   <div class="field"><label>Season</label><select id="calYear"></select></div>
+   <button class="btn red" id="loadCalendar">Load calendar</button>
+  </div>
+  <div id="calendarStatus" class="status"></div>
+  <div id="calendarTable"></div>
+ </div>
+ <div class="grid"><div class="panel c12">
+  <h3>Selected event circuit</h3>
+  <div id="circuitInfo" class="muted">Choose an event from the calendar.</div>
+  <img id="circuitImage" alt="Circuit layout" style="display:none;max-width:100%;max-height:430px;object-fit:contain;background:#0b1118;border-radius:8px;padding:10px">
+ </div></div>
+</section>
+
+<section class="page" id="page-replay">
+ <div class="eyebrow">02 / Historical telemetry reconstruction</div>
+ <h2>2D Grand Prix replay</h2>
+ <p class="muted">The replay uses OpenF1's approximate car-position coordinates. It is a telemetry reconstruction, not broadcast footage or a full-fidelity official timing product.</p>
+ <div class="panel">
+  <div class="controls">
+   <div class="field"><label>Season</label><select id="replayYear"></select></div>
+   <div class="field" style="min-width:220px"><label>Grand Prix</label><select id="replayMeeting"><option value="">Load a season first</option></select></div>
+   <div class="field"><label>Session</label><select id="replaySession"><option value="Race">Race</option><option value="Sprint">Sprint</option><option value="Qualifying">Qualifying</option></select></div>
+   <button class="btn secondary" id="findSessions">Find events</button>
+   <button class="btn red" id="loadReplay">Load replay</button>
+  </div>
+  <div id="replayStatus" class="status">Choose a season and event.</div>
+ </div>
+ <canvas id="replayCanvas" class="trackCanvas" width="1200" height="650"></canvas>
+ <div class="panel">
+  <div class="controls">
+   <button class="btn red" id="playReplay" disabled>▶ Play</button>
+   <button class="btn secondary" id="resetReplay" disabled>Reset</button>
+   <div class="field" style="flex:1;min-width:170px"><label>Playback position</label><input id="replayRange" type="range" min="0" max="1000" value="0" disabled></div>
+   <div class="field"><label>Speed</label><select id="replaySpeed"><option value="1">1×</option><option value="2">2×</option><option value="4">4×</option><option value="8">8×</option></select></div>
+  </div>
+  <div class="specGrid" style="margin-top:12px">
+   <div class="spec"><b id="replayClock">00:00</b><span>SESSION ELAPSED</span></div>
+   <div class="spec"><b id="replayCars">—</b><span>TRACKED CARS</span></div>
+   <div class="spec"><b id="replaySample">—</b><span>POSITION SAMPLES</span></div>
+  </div>
+  <div id="replayLegend" class="componentList" style="margin-top:12px"></div>
+ </div>
+ <div class="notice">OpenF1 location data is sampled at approximately 3.7 Hz and is approximate. The API's free historical tier has request limits. This implementation loads a bounded, clearly labelled replay window to avoid oversized requests and HTTP 422 failures. Full-session coverage depends on API response limits and availability.</div>
+</section>
+
+<section class="page" id="page-cars">
+ <div class="eyebrow">03 / Vehicle architecture & engineering</div>
+ <h2>3D vehicle engineering laboratory</h2>
+ <p class="muted">Interactive parametric reconstruction of a modern ground-effect open-wheel race car. Geometry is an engineering visualisation, not an official team CAD model.</p>
+ <div class="grid">
+  <div class="c8">
+   <div class="carStage">
+    <canvas id="car3d"></canvas>
+    <div class="stageLabel">APEX / PARAMETRIC OPEN-WHEEL MODEL</div>
+    <div class="stageHint">DRAG TO ORBIT · SCROLL TO ZOOM</div>
+   </div>
+  </div>
+  <div class="c4">
+   <div class="panel">
+    <h3>Vehicle configuration</h3>
+    <div class="field"><label>Team colour reference</label>
+     <select id="teamColour">
+      <option value="#e8002d">Ferrari — red</option>
+      <option value="#3671c6">Red Bull — blue</option>
+      <option value="#ff8000">McLaren — papaya</option>
+      <option value="#27f4d2">Mercedes — teal</option>
+      <option value="#229971">Aston Martin — green</option>
+      <option value="#64c4ff">Williams — blue</option>
+      <option value="#ff87bc">Alpine — pink</option>
+      <option value="#b6babd">Haas — silver</option>
+      <option value="#6692ff">Racing Bulls — blue</option>
+      <option value="#52e252">Sauber — green</option>
+     </select>
+    </div>
+    <div class="field" style="margin-top:10px"><label>Regulation concept</label>
+     <select id="era"><option value="2026">2026 regulation concept</option><option value="2022">2022–2025 ground-effect concept</option></select>
+    </div>
+    <div class="componentList" id="componentButtons" style="margin-top:15px">
+     <button class="active" data-part="all">Complete car</button>
+     <button data-part="frontWing">Front wing</button>
+     <button data-part="nose">Nose / chassis</button>
+     <button data-part="sidepods">Sidepods</button>
+     <button data-part="floor">Floor</button>
+     <button data-part="rearWing">Rear wing</button>
+     <button data-part="suspension">Suspension</button>
+     <button data-part="wheels">Wheels</button>
+    </div>
+   </div>
+   <div class="panel">
+    <div class="eyebrow">Selected component</div>
+    <h3 id="partTitle">Complete vehicle</h3>
+    <p id="partDescription">A modern open-wheel racing car integrates aerodynamic surfaces, a survival cell, suspension and hybrid powertrain packaging into one tightly constrained platform.</p>
+   </div>
+  </div>
+ </div>
+ <div class="sectionhead"><div><div class="eyebrow">Engineering reference</div><h2>Vehicle systems overview</h2></div></div>
+ <div class="grid">
+  <div class="panel c4"><h3>Aerodynamics</h3><p>Front wing, floor, diffuser and rear wing manage airflow, downforce and drag.</p></div>
+  <div class="panel c4"><h3>Vehicle dynamics</h3><p>Suspension geometry, tyre behaviour, weight distribution and ride height influence handling.</p></div>
+  <div class="panel c4"><h3>Power unit</h3><p>Combustion, electrical deployment, energy recovery and thermal management define power delivery.</p></div>
+ </div>
+</section>
+<!-- ==========================================
+     PART 3 — RESULTS, DRIVERS AND RESEARCH
+========================================== -->
+
+<section class="page" id="page-results">
+ <div class="eyebrow">04 / Championship analytics</div>
+ <h2>Race results & qualifying analysis</h2>
+ <p class="muted">Explore historical race classifications, qualifying results and championship standings.</p>
+
+ <div class="panel">
+  <div class="controls">
+   <div class="field"><label>Season</label><select id="resultYear"></select></div>
+   <div class="field"><label>Grand Prix round</label><select id="resultRound"><option value="1">Round 1</option></select></div>
+   <button class="btn red" id="loadResults">Load race results</button>
+  </div>
+  <div id="resultsStatus" class="status"></div>
+  <div id="resultsTable"></div>
+ </div>
+
+ <div class="sectionhead">
+  <div><div class="eyebrow">Qualifying performance</div><h2>Starting grid analysis</h2></div>
+ </div>
+ <div class="panel">
+  <div id="qualifyingStatus" class="status">Select a season and round to load qualifying data.</div>
+  <div id="qualifyingTable"></div>
+ </div>
+</section>
+
+<section class="page" id="page-drivers">
+ <div class="eyebrow">05 / Championship standings</div>
+ <h2>Drivers & constructors</h2>
+ <p class="muted">Historical championship positions and points from the open race database.</p>
+
+ <div class="panel">
+  <div class="controls">
+   <div class="field"><label>Season</label><select id="standingYear"></select></div>
+   <button class="btn red" id="loadStandings">Load standings</button>
+  </div>
+  <div id="standingStatus" class="status"></div>
+ </div>
+
+ <div class="grid">
+  <div class="panel c6">
+   <div class="eyebrow">Driver championship</div>
+   <h3>Driver standings</h3>
+   <div id="driverStandings"></div>
+  </div>
+  <div class="panel c6">
+   <div class="eyebrow">Constructor championship</div>
+   <h3>Team standings</h3>
+   <div id="constructorStandings"></div>
+  </div>
+ </div>
+</section>
+
+<section class="page" id="page-research">
+ <div class="eyebrow">06 / Technical research & methodology</div>
+ <h2>Research desk</h2>
+ <p class="muted">A transparent research framework for understanding Formula One engineering, vehicle performance and race strategy.</p>
+
+ <div class="grid">
+  <div class="panel c6">
+   <span class="tag">AERODYNAMICS</span>
+   <h3>Downforce and drag</h3>
+   <p>Study the relationship between aerodynamic load, drag, ride height, airflow and vehicle balance.</p>
+   <ul class="muted">
+    <li>Front-wing airflow management</li>
+    <li>Underfloor and diffuser performance</li>
+    <li>Rear-wing efficiency</li>
+    <li>Drag reduction and straight-line speed</li>
+   </ul>
+  </div>
+
+  <div class="panel c6">
+   <span class="tag">VEHICLE DYNAMICS</span>
+   <h3>Tyres, suspension and handling</h3>
+   <p>Understand how tyre characteristics, mechanical grip and suspension influence cornering behaviour.</p>
+   <ul class="muted">
+    <li>Tyre temperature and degradation</li>
+    <li>Load transfer and balance</li>
+    <li>Ride height and platform control</li>
+    <li>Corner entry, apex and exit</li>
+   </ul>
+  </div>
+
+  <div class="panel c6">
+   <span class="tag">POWERTRAIN</span>
+   <h3>Hybrid power systems</h3>
+   <p>Explore how energy recovery, deployment and thermal management affect lap performance.</p>
+   <ul class="muted">
+    <li>Energy recovery systems</li>
+    <li>Electrical power deployment</li>
+    <li>Combustion engine efficiency</li>
+    <li>Cooling and thermal constraints</li>
+   </ul>
+  </div>
+
+  <div class="panel c6">
+   <span class="tag">RACE STRATEGY</span>
+   <h3>Race engineering</h3>
+   <p>Analyse strategic decisions and how teams respond to changing race conditions.</p>
+   <ul class="muted">
+    <li>Pit-stop windows</li>
+    <li>Tyre strategy</li>
+    <li>Safety-car scenarios</li>
+    <li>Undercut and overcut concepts</li>
+   </ul>
+  </div>
+
+  <div class="panel c12">
+   <div class="eyebrow">Development research</div>
+   <h3>Car development timeline</h3>
+   <p>Compare publicly documented technical developments across the 2023–2026 seasons. This section is a research framework, not a verified database of every team upgrade.</p>
+   <div class="tablewrap">
+    <table>
+     <thead><tr><th>Season</th><th>Research focus</th><th>Areas to investigate</th></tr></thead>
+     <tbody>
+      <tr><td>2023</td><td>Ground-effect development</td><td>Floor edges, sidepod concepts, aerodynamic consistency</td></tr>
+      <tr><td>2024</td><td>Aerodynamic refinement</td><td>Cooling layouts, floor performance, bodywork evolution</td></tr>
+      <tr><td>2025</td><td>Regulation-cycle optimisation</td><td>Vehicle balance, tyre management, aerodynamic efficiency</td></tr>
+      <tr><td>2026</td><td>New technical regulations</td><td>Active aerodynamics, revised power units, energy management</td></tr>
+     </tbody>
+    </table>
+   </div>
+  </div>
+
+  <div class="panel c12">
+   <div class="eyebrow">Data provenance</div>
+   <h3>Open research sources</h3>
+   <div class="source">
+    <div><b>OpenF1</b><div class="small muted">Historical telemetry, location, sessions and timing data</div></div>
+    <a href="https://openf1.org/docs/" target="_blank" rel="noopener">Documentation ↗</a>
+   </div>
+   <div class="source">
+    <div><b>Jolpica F1 API</b><div class="small muted">Historical race results, qualifying and standings</div></div>
+    <a href="https://github.com/jolpica/jolpica-f1" target="_blank" rel="noopener">Project ↗</a>
+   </div>
+   <div class="source">
+    <div><b>F1DB</b><div class="small muted">Open-source Formula One historical dataset</div></div>
+    <a href="https://github.com/f1db/f1db" target="_blank" rel="noopener">Dataset ↗</a>
+   </div>
+   <div class="source">
+    <div><b>FIA</b><div class="small muted">Official sporting and technical regulations</div></div>
+    <a href="https://www.fia.com/regulation/category/110" target="_blank" rel="noopener">Regulations ↗</a>
+   </div>
+   <div class="source">
+    <div><b>Formula 1</b><div class="small muted">Official event and championship information</div></div>
+    <a href="https://www.formula1.com/" target="_blank" rel="noopener">Official website ↗</a>
+   </div>
+  </div>
+ </div>
+
+ <div class="notice">
+  Research note: APEX is an independent educational platform. Historical data may contain gaps, and engineering interpretations should be checked against official regulations and technical publications. The 3D vehicle is illustrative, not manufacturer CAD.
+ </div>
+</section>
+
+<footer class="footer">
+ <div class="brand">APEX <small>MOTORSPORT INTELLIGENCE</small></div>
+ <p>Independent Formula One research and educational visualisation platform.</p>
+ <p>Data credits: OpenF1 · Jolpica · F1DB · FIA</p>
+ <p>Not affiliated with Formula One, the FIA or any racing team.</p>
+ <p>© 2026 APEX Racing Project</p>
+</footer>
+</main>
+
+<!-- ==========================================
+     PART 4 — APPLICATION JAVASCRIPT ENGINE
+========================================== -->
+
+<script>
+"use strict";
+
+const API = "https://api.jolpi.ca/ergast/f1";
+const OPEN = "https://api.openf1.org/v1";
+
+const $ = id => document.getElementById(id);
+
+const state = {
+ calendar: [],
+ meetings: [],
+ sessions: [],
+ replay: [],
+ replayFrame: 0,
+ playing: false,
+ animation: null,
+ carScene: null,
+ carRenderer: null,
+ carCamera: null,
+ carRoot: null,
+ carParts: {},
+ selectedPart: "all"
+};
+
+function escapeHTML(value) {
+ return String(value ?? "").replace(/[&<>"']/g, c => ({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+ }[c]));
+}
+
+function showPage(name) {
+ document.querySelectorAll(".page").forEach(p => p.classList.remove("active"));
+ document.querySelectorAll(".nav button").forEach(b => b.classList.toggle("active",b.dataset.page===name));
+ const page = $("page-"+name);
+ if(page) page.classList.add("active");
+ if(name==="cars" && window.resize3D) setTimeout(window.resize3D,100);
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+
+$("nav").addEventListener("click",e=>{
+ const b=e.target.closest("button[data-page]");
+ if(b) showPage(b.dataset.page);
+});
+
+function fillYears(id,start=2023,end=2026) {
+ const el=$(id);
+ if(!el)return;
+ el.innerHTML="";
+ for(let y=end;y>=start;y--){
+  const op=document.createElement("option");
+  op.value=y;op.textContent=y;el.appendChild(op);
+ }
+}
+
+["calYear","replayYear","resultYear","standingYear"].forEach(id=>fillYears(id));
+
+async function getJSON(url) {
+ const response=await fetch(url);
+ if(!response.ok) throw new Error("HTTP "+response.status);
+ return response.json();
+}
+
+async function checkConnections() {
+ $("connectionMsg").textContent="Checking public data services...";
+ $("openStatus").textContent="Checking...";
+ $("jolpicaStatus").textContent="Checking...";
+
+ const checks=await Promise.allSettled([
+  getJSON(OPEN+"/sessions?year=2025&session_name=Race"),
+  getJSON(API+"/2025.json?limit=1")
+ ]);
+
+ $("openStatus").textContent=checks[0].status==="fulfilled"?"Connected":"Unavailable";
+ $("openStatus").style.color=checks[0].status==="fulfilled"?"var(--green)":"#ff7c85";
+ $("jolpicaStatus").textContent=checks[1].status==="fulfilled"?"Connected":"Unavailable";
+ $("jolpicaStatus").style.color=checks[1].status==="fulfilled"?"var(--green)":"#ff7c85";
+
+ $("connectionMsg").textContent="Connection check complete.";
+}
+
+function tableHTML(headers,rows) {
+ if(!rows.length)return "<p class='muted'>No records returned.</p>";
+ return "<div class='tablewrap'><table><thead><tr>"+
+ headers.map(h=>"<th>"+escapeHTML(h)+"</th>").join("")+
+ "</tr></thead><tbody>"+
+ rows.map(row=>"<tr>"+row.map(v=>"<td>"+v+"</td>").join("")+"</tr>").join("")+
+ "</tbody></table></div>";
+}
+
+/* GRAND PRIX CALENDAR */
+
+async function loadCalendar() {
+ const year=$("calYear").value;
+ $("calendarStatus").textContent="Loading "+year+" event calendar...";
+ $("calendarTable").innerHTML="";
+
+ try {
+  const data=await getJSON(API+"/"+year+".json?limit=100");
+  const races=data?.MRData?.RaceTable?.Races||[];
+  state.calendar=races;
+
+  $("calendarTable").innerHTML=tableHTML(
+   ["Round","Grand Prix","Circuit","Location","Date"],
+   races.map((r,i)=>[
+    escapeHTML(r.round),
+    "<button class='btn secondary' data-event='"+i+"'>"+escapeHTML(r.raceName)+"</button>",
+    escapeHTML(r.Circuit?.circuitName||"—"),
+    escapeHTML((r.Circuit?.Location?.locality||"")+", "+(r.Circuit?.Location?.country||"")),
+    escapeHTML(r.date||"—")
+   ])
+  );
+
+  $("calendarStatus").textContent=races.length+" events loaded for "+year+".";
+  $("calendarStatus").className="status good";
+
+  $("calendarTable").querySelectorAll("[data-event]").forEach(btn=>{
+   btn.addEventListener("click",()=>selectCalendarEvent(Number(btn.dataset.event)));
+  });
+
+ } catch(err) {
+  $("calendarStatus").textContent="Could not load calendar: "+err.message;
+  $("calendarStatus").className="status error";
+ }
+}
+
+async function selectCalendarEvent(index) {
+ const race=state.calendar[index];
+ if(!race)return;
+
+ $("circuitInfo").innerHTML=
+  "<b>"+escapeHTML(race.raceName)+"</b><p>"+
+  escapeHTML(race.Circuit?.circuitName||"Circuit information unavailable")+
+  " · "+escapeHTML(race.Circuit?.Location?.locality||"")+
+  " · "+escapeHTML(race.Circuit?.Location?.country||"")+
+  "</p><p class='small muted'>Circuit layout imagery is not available for every event.</p>";
+
+ $("circuitImage").style.display="none";
+}
+
+/* RESULTS AND QUALIFYING */
+
+async function loadResults() {
+ const year=$("resultYear").value;
+ const round=$("resultRound").value;
+
+ $("resultsStatus").textContent="Loading race classification...";
+ $("resultsTable").innerHTML="";
+ $("qualifyingTable").innerHTML="";
+
+ try {
+  const data=await getJSON(API+"/"+year+"/"+round+"/results.json?limit=100");
+  const races=data?.MRData?.RaceTable?.Races||[];
+  const race=races[0];
+
+  if(!race)throw new Error("No race result found for this round.");
+
+  const results=race.Results||[];
+
+  $("resultsTable").innerHTML=tableHTML(
+   ["Position","Driver","Constructor","Grid","Laps","Points","Status"],
+   results.map(r=>[
+    escapeHTML(r.position),
+    escapeHTML(r.Driver?.givenName+" "+r.Driver?.familyName),
+    escapeHTML(r.Constructor?.name),
+    escapeHTML(r.grid),
+    escapeHTML(r.laps),
+    escapeHTML(r.points),
+    escapeHTML(r.status)
+   ])
+  );
+
+  $("resultsStatus").textContent=race.raceName+" · "+race.date;
+  $("resultsStatus").className="status good";
+
+  await loadQualifying(year,round);
+
+ } catch(err) {
+  $("resultsStatus").textContent=err.message;
+  $("resultsStatus").className="status error";
+ }
+}
+
+async function loadQualifying(year,round) {
+ $("qualifyingStatus").textContent="Loading qualifying classification...";
+
+ try {
+  const data=await getJSON(API+"/"+year+"/"+round+"/qualifying.json?limit=100");
+  const races=data?.MRData?.RaceTable?.Races||[];
+  const race=races[0];
+
+  if(!race)throw new Error("No qualifying record found.");
+
+  $("qualifyingTable").innerHTML=tableHTML(
+   ["Position","Driver","Team","Q1","Q2","Q3"],
+   (race.QualifyingResults||[]).map(r=>[
+    escapeHTML(r.position),
+    escapeHTML(r.Driver?.givenName+" "+r.Driver?.familyName),
+    escapeHTML(r.Constructor?.name),
+    escapeHTML(r.Q1||"—"),
+    escapeHTML(r.Q2||"—"),
+    escapeHTML(r.Q3||"—")
+   ])
+  );
+
+  $("qualifyingStatus").textContent="Qualifying data loaded.";
+  $("qualifyingStatus").className="status good";
+
+ } catch(err) {
+  $("qualifyingStatus").textContent=err.message;
+  $("qualifyingStatus").className="status error";
+ }
+}
+
+async function populateRounds() {
+ const year=$("resultYear").value;
+ const select=$("resultRound");
+
+ try {
+  const data=await getJSON(API+"/"+year+".json?limit=100");
+  const races=data?.MRData?.RaceTable?.Races||[];
+
+  select.innerHTML=races.map(r=>
+   "<option value='"+escapeHTML(r.round)+"'>"+
+   escapeHTML(r.round+". "+r.raceName)+
+   "</option>"
+  ).join("");
+
+ } catch(err) {
+  select.innerHTML="<option value='1'>Round 1</option>";
+ }
+}
+
+/* DRIVER AND CONSTRUCTOR STANDINGS */
+
+async function loadStandings() {
+ const year=$("standingYear").value;
+ $("standingStatus").textContent="Loading championship standings...";
+
+ try {
+  const [driverData,constructorData]=await Promise.all([
+   getJSON(API+"/"+year+"/driverStandings.json?limit=100"),
+   getJSON(API+"/"+year+"/constructorStandings.json?limit=100")
+  ]);
+
+  const driverLists=driverData?.MRData?.StandingsTable?.StandingsLists||[];
+  const constructorLists=constructorData?.MRData?.StandingsTable?.StandingsLists||[];
+
+  const drivers=driverLists[0]?.DriverStandings||[];
+  const constructors=constructorLists[0]?.ConstructorStandings||[];
+
+  $("driverStandings").innerHTML=tableHTML(
+   ["Pos","Driver","Team","Points","Wins"],
+   drivers.map(d=>[
+    escapeHTML(d.position),
+    escapeHTML(d.Driver?.givenName+" "+d.Driver?.familyName),
+    escapeHTML(d.Constructors?.[0]?.name||"—"),
+    escapeHTML(d.points),
+    escapeHTML(d.wins)
+   ])
+  );
+
+  $("constructorStandings").innerHTML=tableHTML(
+   ["Pos","Constructor","Points","Wins"],
+   constructors.map(c=>[
+    escapeHTML(c.position),
+    escapeHTML(c.Constructor?.name),
+    escapeHTML(c.points),
+    escapeHTML(c.wins)
+   ])
+  );
+
+  $("standingStatus").textContent="Standings loaded for "+year+".";
+  $("standingStatus").className="status good";
+
+ } catch(err) {
+  $("standingStatus").textContent="Could not load standings: "+err.message;
+  $("standingStatus").className="status error";
+ }
+}
+
+/* INITIALISE EVENT CONTROLS */
+
+$("loadCalendar").addEventListener("click",loadCalendar);
+$("loadResults").addEventListener("click",loadResults);
+$("loadStandings").addEventListener("click",loadStandings);
+
+$("resultYear").addEventListener("change",populateRounds);
+
+populateRounds();
+
+/* REPLAY ENGINE — OPENF1 */
+
+async function findReplayMeetings() {
+ const year=$("replayYear").value;
+ $("replayStatus").textContent="Finding available events...";
+
+ try {
+  const meetings=await getJSON(OPEN+"/meetings?year="+year);
+  state.meetings=meetings||[];
+
+  $("replayMeeting").innerHTML=state.meetings.map(m=>
+   "<option value='"+escapeHTML(m.meeting_key)+"'>"+
+   escapeHTML(m.meeting_name||m.meeting_official_name||"Meeting")+
+   "</option>"
+  ).join("");
+
+  $("replayStatus").textContent=state.meetings.length+" events found.";
+  $("replayStatus").className="status good";
+
+ } catch(err) {
+  $("replayStatus").textContent="Could not load events: "+err.message;
+  $("replayStatus").className="status error";
+ }
+}
+
+async function loadReplaySessions() {
+ const meeting=$("replayMeeting").value;
+ if(!meeting)return;
+
+ $("replayStatus").textContent="Finding sessions...";
+
+ try {
+  const sessions=await getJSON(OPEN+"/sessions?meeting_key="+meeting);
+  state.sessions=sessions||[];
+
+  const selected=$("replaySession").value.toLowerCase();
+
+  const found=state.sessions.find(s=>
+   String(s.session_name||"").toLowerCase().includes(selected)
+  );
+
+  if(found) {
+   $("replayStatus").textContent="Session found: "+found.session_name;
+   $("replayStatus").dataset.session=found.session_key;
+   $("replayStatus").className="status good";
+  } else {
+   $("replayStatus").textContent="No matching session found for this event.";
+   $("replayStatus").dataset.session="";
+   $("replayStatus").className="status error";
+  }
+
+ } catch(err) {
+  $("replayStatus").textContent=err.message;
+  $("replayStatus").className="status error";
+ }
+}
+
+async function loadReplay() {
+ const sessionKey=$("replayStatus").dataset.session;
+
+ if(!sessionKey) {
+  await loadReplaySessions();
+  return;
+ }
+
+ $("replayStatus").textContent="Loading a bounded telemetry window...";
+
+ try {
+  const session=state.sessions.find(s=>String(s.session_key)===String(sessionKey));
+  if(!session)throw new Error("Session information unavailable.");
+
+  const start=new Date(session.date_start);
+  const end=new Date(start.getTime()+5*60*1000);
+
+  const params=new URLSearchParams({
+   "session_key":sessionKey,
+   "date>":start.toISOString(),
+   "date<":end.toISOString()
+  });
+
+  const data=await getJSON(OPEN+"/location?"+params.toString());
+
+  if(!data.length)throw new Error("No location samples returned for this window.");
+
+  state.replay=data.sort((a,b)=>new Date(a.date)-new Date(b.date));
+
+  $("replayRange").disabled=false;
+  $("replayRange").value=0;
+  $("replayRange").max=Math.max(0,state.replay.length-1);
+
+  $("playReplay").disabled=false;
+  $("resetReplay").disabled=false;
+
+  $("replaySample").textContent=state.replay.length;
+  $("replayCars").textContent=new Set(state.replay.map(d=>d.driver_number)).size;
+
+  drawReplay(0);
+
+  $("replayStatus").textContent=
+   "Loaded "+state.replay.length+" position samples from the first five minutes of this session.";
+  $("replayStatus").className="status good";
+
+ } catch(err) {
+  $("replayStatus").textContent="Replay error: "+err.message;
+  $("replayStatus").className="status error";
+ }
+}
+
+function drawReplay(index) {
+ const canvas=$("replayCanvas");
+ const ctx=canvas.getContext("2d");
+ const w=canvas.width,h=canvas.height;
+
+ ctx.clearRect(0,0,w,h);
+ ctx.fillStyle="#0b1118";
+ ctx.fillRect(0,0,w,h);
+
+ if(!state.replay.length)return;
+
+ const current=state.replay[Math.max(0,Math.min(index,state.replay.length-1))];
+
+ const all=state.replay.filter(p=>
+  Number.isFinite(Number(p.x))&&Number.isFinite(Number(p.y))
+ );
+
+ if(!all.length)return;
+
+ const xs=all.map(p=>Number(p.x));
+ const ys=all.map(p=>Number(p.y));
+
+ const minX=Math.min(...xs),maxX=Math.max(...xs);
+ const minY=Math.min(...ys),maxY=Math.max(...ys);
+
+ const sx=x=>80+(x-minX)/(maxX-minX||1)*(w-160);
+ const sy=y=>h-80-(y-minY)/(maxY-minY||1)*(h-160);
+
+ ctx.strokeStyle="#3d4c5b";
+ ctx.lineWidth=8;
+ ctx.lineJoin="round";
+ ctx.beginPath();
+
+ all.forEach((p,i)=>{
+  if(i===0)ctx.moveTo(sx(Number(p.x)),sy(Number(p.y)));
+  else ctx.lineTo(sx(Number(p.x)),sy(Number(p.y)));
+ });
+
+ ctx.stroke();
+
+ const currentDate=new Date(current.date).getTime();
+
+ const nearby=state.replay.filter(p=>
+  p.driver_number===current.driver_number &&
+  Math.abs(new Date(p.date).getTime()-currentDate)<1000
+ );
+
+ const positions=new Map();
+ state.replay.forEach(p=>{
+  if(Math.abs(new Date(p.date).getTime()-currentDate)<350){
+   positions.set(p.driver_number,p);
+  }
+ });
+
+ let i=0;
+ positions.forEach(p=>{
+  const colors=["#ff4655","#6ba9ff","#f3b84b","#56c596","#bd91ff","#ff8c55","#f1f1f1"];
+  ctx.fillStyle=colors[i++%colors.length];
+  ctx.beginPath();
+  ctx.arc(sx(Number(p.x)),sy(Number(p.y)),8,0,Math.PI*2);
+  ctx.fill();
+  ctx.fillStyle="#fff";
+  ctx.font="12px monospace";
+  ctx.fillText(String(p.driver_number),sx(Number(p.x))+10,sy(Number(p.y))-10);
+ });
+
+ $("replayClock").textContent=
+  new Date(currentDate).toLocaleTimeString([], {minute:"2-digit",second:"2-digit"});
+
+}
+
+function stopReplay() {
+ state.playing=false;
+ if(state.animation)cancelAnimationFrame(state.animation);
+ state.animation=null;
+ $("playReplay").textContent="▶ Play";
+}
+
+function animateReplay() {
+ if(!state.playing)return;
+
+ const range=$("replayRange");
+ let next=Number(range.value)+Number($("replaySpeed").value);
+
+ if(next>=state.replay.length) {
+  next=state.replay.length-1;
+  stopReplay();
+ }
+
+ range.value=next;
+ drawReplay(next);
+
+ if(state.playing)state.animation=requestAnimationFrame(animateReplay);
+}
+
+$("findSessions").addEventListener("click",findReplayMeetings);
+
+$("replayYear").addEventListener("change",findReplayMeetings);
+
+$("replayMeeting").addEventListener("change",loadReplaySessions);
+
+$("replaySession").addEventListener("change",loadReplaySessions);
+
+$("loadReplay").addEventListener("click",loadReplay);
+
+$("playReplay").addEventListener("click",()=>{
+ if(!state.replay.length)return;
+ if(state.playing) {
+  stopReplay();
+ } else {
+  if(Number($("replayRange").value)>=state.replay.length-1) {
+   $("replayRange").value=0;
+  }
+  state.playing=true;
+  $("playReplay").textContent="Ⅱ Pause";
+  animateReplay();
+ }
+});
+
+$("resetReplay").addEventListener("click",()=>{
+ stopReplay();
+ $("replayRange").value=0;
+ drawReplay(0);
+});
+
+$("replayRange").addEventListener("input",e=>{
+ stopReplay();
+ drawReplay(Number(e.target.value));
+});
+
+/* END OF PART 4 — 3D ENGINE CONTINUES IN PART 5 */
+   </script>
+   <!-- ==========================================
+     PART 5 — THREE.JS 3D VEHICLE ENGINE
+========================================== -->
+
+<script type="module">
+import * as THREE from "three";
+import {OrbitControls} from "three/addons/controls/OrbitControls.js";
+
+const canvas=document.getElementById("car3d");
+
+const scene=new THREE.Scene();
+scene.background=new THREE.Color("#0b1017");
+
+const camera=new THREE.PerspectiveCamera(38,1,0.1,100);
+camera.position.set(8,5,10);
+
+const renderer=new THREE.WebGLRenderer({
+ canvas,
+ antialias:true,
+ alpha:true
+});
+
+renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+renderer.shadowMap.enabled=true;
+renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+renderer.outputColorSpace=THREE.SRGBColorSpace;
+
+const controls=new OrbitControls(camera,renderer.domElement);
+controls.enableDamping=true;
+controls.dampingFactor=.06;
+controls.target.set(0,.6,0);
+controls.minDistance=5;
+controls.maxDistance=20;
+
+scene.add(new THREE.HemisphereLight(0xffffff,0x263344,2));
+
+const keyLight=new THREE.DirectionalLight(0xffffff,3);
+keyLight.position.set(5,9,7);
+scene.add(keyLight);
+
+const rimLight=new THREE.DirectionalLight(0x4c8cff,2);
+rimLight.position.set(-7,4,-6);
+scene.add(rimLight);
+
+const floor=new THREE.Mesh(
+ new THREE.PlaneGeometry(200,200),
+ new THREE.MeshStandardMaterial({
+  color:0x0c121a,
+  roughness:.9,
+  metalness:.1
+ })
+);
+floor.rotation.x=-Math.PI/2;
+floor.position.y=-.15;
+scene.add(floor);
+
+const grid=new THREE.GridHelper(40,40,0x263749,0x172330);
+grid.position.y=-.14;
+scene.add(grid);
+
+const root=new THREE.Group();
+scene.add(root);
+
+const parts={};
+
+function makeGroup(name){
+ const g=new THREE.Group();
+ g.name=name;
+ root.add(g);
+ parts[name]=g;
+ return g;
+}
+
+const paintMaterial=new THREE.MeshStandardMaterial({
+ color:0xe8002d,
+ metalness:.55,
+ roughness:.3
+});
+
+const carbonMaterial=new THREE.MeshStandardMaterial({
+ color:0x151a20,
+ metalness:.35,
+ roughness:.6
+});
+
+const darkMaterial=new THREE.MeshStandardMaterial({
+ color:0x080a0d,
+ metalness:.15,
+ roughness:.8
+});
+
+const rubberMaterial=new THREE.MeshStandardMaterial({
+ color:0x090b0e,
+ roughness:.95
+});
+
+const metallicMaterial=new THREE.MeshStandardMaterial({
+ color:0x9099a5,
+ metalness:.8,
+ roughness:.3
+});
+
+function box(parent,x,y,z,sx,sy,sz,mat=paintMaterial){
+ const mesh=new THREE.Mesh(
+  new THREE.BoxGeometry(sx,sy,sz),
+  mat
+ );
+ mesh.position.set(x,y,z);
+ mesh.castShadow=true;
+ mesh.receiveShadow=true;
+ parent.add(mesh);
+ return mesh;
+}
+
+function cylinder(parent,x,y,z,radius,length,mat,axis="x"){
+ const mesh=new THREE.Mesh(
+  new THREE.CylinderGeometry(radius,radius,length,32),
+  mat
+ );
+
+ if(axis==="x")mesh.rotation.z=Math.PI/2;
+ if(axis==="z")mesh.rotation.x=Math.PI/2;
+
+ mesh.position.set(x,y,z);
+ mesh.castShadow=true;
+ parent.add(mesh);
+ return mesh;
+}
+
+function wing(parent,x,y,z,width,depth){
+ const wing=box(
+  parent,x,y,z,
+  width,.09,depth,
+  carbonMaterial
+ );
+ wing.rotation.x=-.08;
+ return wing;
+}
+
+/* CHASSIS AND NOSE */
+
+const chassis=makeGroup("nose");
+
+const bodyShape=new THREE.Shape();
+bodyShape.moveTo(-.48,-2.6);
+bodyShape.lineTo(.48,-2.6);
+bodyShape.lineTo(.55,-.4);
+bodyShape.lineTo(.42,1.7);
+bodyShape.lineTo(.3,2.1);
+bodyShape.lineTo(-.3,2.1);
+bodyShape.lineTo(-.42,1.7);
+bodyShape.lineTo(-.55,-.4);
+bodyShape.close();
+
+const bodyGeometry=new THREE.ExtrudeGeometry(bodyShape,{
+ depth:.42,
+ bevelEnabled:true,
+ bevelSegments:3,
+ steps:1,
+ bevelSize:.08,
+ bevelThickness:.08
+});
+
+const body=new THREE.Mesh(bodyGeometry,paintMaterial);
+body.rotation.x=Math.PI/2;
+body.position.y=.78;
+body.castShadow=true;
+chassis.add(body);
+
+box(chassis,0,1.05,-.05,.7,.55,1.25,paintMaterial);
+box(chassis,0,1.35,.75,.55,.32,.75,paintMaterial);
+
+/* COCKPIT */
+
+const cockpit=new THREE.Mesh(
+ new THREE.SphereGeometry(.48,32,20),
+ new THREE.MeshStandardMaterial({
+  color:0x111c2b,
+  metalness:.8,
+  roughness:.15,
+  transparent:true,
+  opacity:.85
+ })
+);
+cockpit.scale.set(.75,.38,1.05);
+cockpit.position.set(0,1.55,.5);
+chassis.add(cockpit);
+
+/* HALO */
+
+const halo=new THREE.Mesh(
+ new THREE.TorusGeometry(.48,.045,12,64,Math.PI),
+ metallicMaterial
+);
+halo.rotation.z=Math.PI;
+halo.rotation.x=Math.PI/2;
+halo.position.set(0,1.8,.45);
+chassis.add(halo);
+
+box(chassis,0,1.64,.05,.08,.4,.08,metallicMaterial);
+
+/* FRONT WING */
+
+const front=makeGroup("frontWing");
+
+wing(front,0,.48,-3.05,3.3,.42);
+wing(front,0,.63,-2.85,2.7,.26);
+wing(front,0,.75,-2.65,2.2,.18);
+
+for(const side of [-1,1]){
+ box(front,side*1.55,.58,-2.9,.08,.48,.52,carbonMaterial);
+ box(front,side*1.7,.45,-3.08,.1,.65,.13,paintMaterial);
+}
+
+/* SIDE PODS */
+
+const sidepods=makeGroup("sidepods");
+
+for(const side of [-1,1]){
+ const pod=box(
+  sidepods,
+  side*.78,.85,-.05,
+  .62,.6,1.45,
+  paintMaterial
+ );
+ pod.rotation.x=.08;
+
+ const inlet=box(
+  sidepods,
+  side*.78,1.18,-.35,
+  .38,.08,.42,
+  darkMaterial
+ );
+
+ const vent=box(
+  sidepods,
+  side*.78,1.15,.45,
+  .42,.06,.5,
+  carbonMaterial
+ );
+}
+
+/* FLOOR */
+
+const floorGroup=makeGroup("floor");
+
+box(floorGroup,0,.38,-.05,1.9,.12,3.8,carbonMaterial);
+
+for(const side of [-1,1]){
+ box(floorGroup,side*.95,.34,-.1,.1,.2,3.5,carbonMaterial);
+ box(floorGroup,side*.7,.42,-.5,.1,.12,1.6,carbonMaterial);
+}
+
+/* REAR WING */
+
+const rear=makeGroup("rearWing");
+
+wing(rear,0,1.55,2.35,2.3,.42);
+wing(rear,0,1.95,2.45,2.2,.18);
+
+for(const side of [-1,1]){
+ box(rear,side*1.02,1.75,2.35,.08,.75,.18,carbonMaterial);
+ box(rear,side*1.02,1.7,2.5,.12,.3,.15,paintMaterial);
+}
+
+/* SUSPENSION */
+
+const suspension=makeGroup("suspension");
+
+function rod(parent,a,b,r=.025){
+ const start=new THREE.Vector3(...a);
+ const end=new THREE.Vector3(...b);
+ const direction=end.clone().sub(start);
+
+ const mesh=new THREE.Mesh(
+  new THREE.CylinderGeometry(r,r,direction.length(),8),
+  metallicMaterial
+ );
+
+ mesh.position.copy(start).add(end).multiplyScalar(.5);
+ mesh.quaternion.setFromUnitVectors(
+  new THREE.Vector3(0,1,0),
+  direction.normalize()
+ );
+
+ parent.add(mesh);
+}
+
+for(const side of [-1,1]){
+ for(const z of [-2.1,2.0]){
+  rod(suspension,[side*.35,1.0,z],[side*1.65,.65,z]);
+  rod(suspension,[side*.35,.8,z+.25],[side*1.65,.65,z-.15]);
+ }
+}
+
+/* WHEELS */
+
+const wheels=makeGroup("wheels");
+
+for(const side of [-1,1]){
+ for(const z of [-2.0,2.0]){
+  const tire=cylinder(
+   wheels,
+   side*1.45,.55,z,
+   .62,.36,
+   rubberMaterial,
+   "x"
+  );
+
+  const rim=cylinder(
+   wheels,
+   side*1.65,.55,z,
+   .34,.05,
+   metallicMaterial,
+   "x"
+  );
+
+  const hub=cylinder(
+   wheels,
+   side*1.69,.55,z,
+   .12,.06,
+   darkMaterial,
+   "x"
+  );
+ }
+}
+
+/* ENGINE COVER AND EXHAUST */
+
+const engine=makeGroup("engine");
+
+box(engine,0,1.25,1.25,.55,.65,1.1,paintMaterial);
+cylinder(engine,0,.85,2.05,.12,.65,metallicMaterial,"z");
+
+/* COMPONENT INSPECTION */
+
+const descriptions={
+ all:[
+  "Complete vehicle",
+  "A modern open-wheel racing car integrates aerodynamic surfaces, a survival cell, suspension and hybrid powertrain packaging."
+ ],
+ frontWing:[
+  "Front wing",
+  "The front wing manages the airflow approaching the car. Its design influences front-axle aerodynamic balance and the flow reaching the floor and sidepods."
+ ],
+ nose:[
+  "Nose and chassis",
+  "The nose connects the front wing to the survival cell. The chassis houses the driver and provides a highly protected structural enclosure."
+ ],
+ sidepods:[
+  "Sidepods",
+  "Sidepods package cooling systems and shape airflow around the vehicle. Their external surfaces influence aerodynamic performance."
+ ],
+ floor:[
+  "Floor and underbody",
+  "The floor and diffuser are major aerodynamic components. Underbody airflow contributes to downforce and vehicle balance."
+ ],
+ rearWing:[
+  "Rear wing",
+  "The rear wing contributes to rear aerodynamic load and drag. Its design and regulation-defined configurations affect straight-line and cornering performance."
+ ],
+ suspension:[
+  "Suspension",
+  "Suspension links connect the wheels to the chassis. Geometry and stiffness influence tyre contact, platform control and mechanical grip."
+ ],
+ wheels:[
+  "Wheels and tyres",
+  "Tyres are the only contact between the car and the track. Their grip, temperature, pressure and degradation strongly influence lap performance."
+ ]
+};
+
+function isolate(part){
+ state.selectedPart=part;
+
+ Object.entries(parts).forEach(([name,group])=>{
+  group.visible=part==="all"||name===part;
+ });
+
+ document.querySelectorAll("#componentButtons button").forEach(b=>{
+  b.classList.toggle("active",b.dataset.part===part);
+ });
+
+ const info=descriptions[part]||descriptions.all;
+ document.getElementById("partTitle").textContent=info[0];
+ document.getElementById("partDescription").textContent=info[1];
+}
+
+document.getElementById("componentButtons").addEventListener("click",e=>{
+ const btn=e.target.closest("button[data-part]");
+ if(btn)isolate(btn.dataset.part);
+});
+
+/* TEAM COLOUR */
+
+document.getElementById("teamColour").addEventListener("change",e=>{
+ paintMaterial.color.set(e.target.value);
+});
+
+/* REGULATION CONCEPT LABEL */
+
+document.getElementById("era").addEventListener("change",e=>{
+ const value=e.target.value;
+ const info=descriptions.all;
+
+ document.getElementById("partTitle").textContent=
+  value==="2026"?"2026 regulation concept":"2022–2025 ground-effect concept";
+
+ document.getElementById("partDescription").textContent=
+  value==="2026"
+   ?"The 2026 model represents a conceptual visualisation of the new-generation regulations. It is not a verified technical replica of a 2026 team car."
+   :"The 2022–2025 model represents a simplified ground-effect-era architecture. It is not an exact replica of a specific season or team.";
+});
+
+/* RESIZE AND ANIMATION */
+
+function resize(){
+ const width=canvas.clientWidth;
+ const height=canvas.clientHeight;
+
+ if(!width||!height)return;
+
+ camera.aspect=width/height;
+ camera.updateProjectionMatrix();
+ renderer.setSize(width,height,false);
+}
+
+window.resize3D=resize;
+
+window.addEventListener("resize",resize);
+resize();
+
+function animate(){
+ requestAnimationFrame(animate);
+ controls.update();
+ renderer.render(scene,camera);
+}
+
+animate();
+
+isolate("all");
+</script>
+
+<!-- ==========================================
+     PART 6 — FINAL INTERFACE INITIALISATION
+========================================== -->
+
+<script>
+(function(){
+ "use strict";
+
+ function initialiseAPEX(){
+
+  const year=new Date().getFullYear();
+
+  document.querySelectorAll(".page").forEach(section=>{
+   section.setAttribute("aria-live","polite");
+  });
+
+  if(document.getElementById("calYear")){
+   document.getElementById("calYear").value=
+    String(Math.min(2026,Math.max(2023,year)));
+  }
+
+  if(document.getElementById("replayYear")){
+   document.getElementById("replayYear").value=
+    String(Math.min(2026,Math.max(2023,year)));
+  }
+
+  if(document.getElementById("resultYear")){
+   document.getElementById("resultYear").value=
+    String(Math.min(2026,Math.max(2023,year)));
+  }
+
+  if(document.getElementById("standingYear")){
+   document.getElementById("standingYear").value=
+    String(Math.min(2026,Math.max(2023,year)));
+  }
+
+  const canvas=document.getElementById("replayCanvas");
+
+  if(canvas){
+   const ctx=canvas.getContext("2d");
+   ctx.fillStyle="#0b1118";
+   ctx.fillRect(0,0,canvas.width,canvas.height);
+   ctx.fillStyle="#91a0b0";
+   ctx.font="16px monospace";
+   ctx.textAlign="center";
+   ctx.fillText("SELECT A SESSION TO LOAD TELEMETRY",canvas.width/2,canvas.height/2);
+   ctx.textAlign="left";
+  }
+
+  console.log("APEX platform initialised.");
+ }
+
+ if(document.readyState==="loading"){
+  document.addEventListener("DOMContentLoaded",initialiseAPEX);
+ }else{
+  initialiseAPEX();
+ }
+
+})();
+</script>
+
+<!-- ==========================================
+     PART 7 — FINAL DOCUMENT CLOSING
+========================================== -->
+
+</body>
+</html>
